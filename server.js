@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require("path");
 
 const app = express();
-const PORT = 3000;
+// const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -25,23 +25,35 @@ function saveData() {
 
 // Receive CSV upload from the app
 app.post("/upload-csv", express.text({ type: "*/*" }), (req, res) => {
-  const csv = req.body;
-  const lines = csv.trim().split("\n");
-  const headers = lines[0].split(",");
-
-  const newRecords = lines.slice(1).map(line => {
-    const values = line.split(",");
-    const record = {};
-    headers.forEach((h, i) => {
-      record[h.trim()] = values[i]?.trim() || "";
+  try {
+    const csv = req.body;
+    if (!csv || typeof csv !== "string") {
+      return res.status(400).json({ success: false, error: "No CSV body received" });
+    }
+    
+    const lines = csv.trim().split("\n");
+    if (lines.length < 2) {
+      return res.status(400).json({ success: false, error: "CSV has no data rows" });
+    }
+    
+    const headers = lines[0].split(",");
+    const newRecords = lines.slice(1).map(line => {
+      const values = line.split(",");
+      const record = {};
+      headers.forEach((h, i) => {
+        record[h.trim()] = values[i]?.trim() || "";
+      });
+      record.id = Date.now().toString() + Math.random();
+      return record;
     });
-    record.id = Date.now().toString() + Math.random();
-    return record;
-  });
 
-  records.push(...newRecords);
-  saveData();
-  res.json({ success: true, added: newRecords.length });
+    records.push(...newRecords);
+    saveData();
+    res.json({ success: true, added: newRecords.length });
+  } catch (err) {
+    console.error("Upload error:", err);
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 // Get all records as JSON for the dashboard
@@ -56,7 +68,12 @@ app.delete("/records", (req, res) => {
   res.json({ success: true });
 });
 
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err);
+  res.status(500).json({ success: false, error: err.message });
+});
+
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`CarTemp Server running at http://localhost:${PORT}`);
-  console.log(`On your network: http://YOUR_LAPTOP_IP:${PORT}`);
 });

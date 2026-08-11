@@ -1,1 +1,58 @@
-[]
+[
+  {
+    "Inspection DateTime": "8/4/2026",
+    "Inspector Name": "10:05:03 PM",
+    "Inspector ID": "Admin User",
+    "Car Number": "INS000",
+    "Center (°F)": "7842",
+    "Vent A (°F)": "72.00",
+    "Vent B (°F)": "75.00",
+    "Average (°F)": "74.00",
+    "Status": "73.67",
+    "Shift": "OK",
+    "Location": "PM",
+    "id": "17861085872800.19375260502808878"
+  },
+  {
+    "Inspection DateTime": "8/4/2026",
+    "Inspector Name": "10:05:17 PM",
+    "Inspector ID": "Admin User",
+    "Car Number": "INS000",
+    "Center (°F)": "7842",
+    "Vent A (°F)": "72.00",
+    "Vent B (°F)": "0.30",
+    "Average (°F)": "75.00",
+    "Status": "49.10",
+    "Shift": "OK",
+    "Location": "PM",
+    "id": "17861085872800.3501356668851352"
+  },
+  {
+    "Inspection DateTime": "8/4/2026",
+    "Inspector Name": "10:05:03 PM",
+    "Inspector ID": "Admin User",
+    "Car Number": "INS000",
+    "Center (°F)": "7842",
+    "Vent A (°F)": "72.00",
+    "Vent B (°F)": "75.00",
+    "Average (°F)": "74.00",
+    "Status": "73.67",
+    "Shift": "OK",
+    "Location": "PM",
+    "id": "17861085883690.8840252805766219"
+  },
+  {
+    "Inspection DateTime": "8/4/2026",
+    "Inspector Name": "10:05:17 PM",
+    "Inspector ID": "Admin User",
+    "Car Number": "INS000",
+    "Center (°F)": "7842",
+    "Vent A (°F)": "72.00",
+    "Vent B (°F)": "0.30",
+    "Average (°F)": "75.00",
+    "Status": "49.10",
+    "Shift": "OK",
+    "Location": "PM",
+    "id": "17861085883700.01685711729422268"
+  }
+]
