@@ -10,6 +10,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
+app.use((req, res, next) => {
+  if (req.path === "/" || req.path.endsWith(".html")) {
+    res.set("Cache-Control", "no-store");
+  }
+  next();
+});
 
 // Store all records in memory + a JSON file for persistence
 const DATA_FILE = "data.json";
