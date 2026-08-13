@@ -127,18 +127,20 @@
   <table>
     <thead>
       <tr>
-        <th>Inspection DateTime</th>
-        <th>Inspector Name</th>
-        <th>Inspector ID</th>
-        <th>Car Number</th>
-        <th>Center (°F)</th>
-        <th>Vent A (°F)</th>
-        <th>Vent B (°F)</th>
-        <th>Average (°F)</th>
-        <th>Status</th>
-        <th>Shift</th>
-        <th>Location</th>
-      </tr>
+  <th>Uploaded On</th>
+  <th>Inspector Last Name</th>
+  <th>Car ID</th>
+  <th>Date</th>
+  <th>AM/PM</th>
+  <th>Shop</th>
+  <th>Start Time</th>
+  <th>Center (°F)</th>
+  <th>Vent A (°F)</th>
+  <th>Vent B (°F)</th>
+  <th>Average (°F)</th>
+  <th>Status</th>
+  <th>Notes</th>
+</tr>
     </thead>
     <tbody id="table-body">
       <tr><td colspan="11" style="text-align:center; padding:20px; color:#999;">
@@ -183,23 +185,25 @@
     }
 
     tbody.innerHTML = filtered.map(r => {
-      const status = r["Status"] || "";
-      const statusClass = status.includes("FLAG") ? "status-flag" :
-                          status === "WATCH" ? "status-watch" : "status-ok";
-      return `<tr>
-        <td>${r["Inspection DateTime"] || ""}</td>
-        <td>${r["Inspector Name"] || ""}</td>
-        <td>${r["Inspector ID"] || ""}</td>
-        <td>${r["Car Number"] || ""}</td>
-        <td>${r["Center (°F)"] || ""}</td>
-        <td>${r["Vent A (°F)"] || ""}</td>
-        <td>${r["Vent B (°F)"] || ""}</td>
-        <td>${r["Average (°F)"] || ""}</td>
-        <td class="${statusClass}">${status}</td>
-        <td>${r["Shift"] || ""}</td>
-        <td>${r["Location"] || ""}</td>
-      </tr>`;
-    }).join("");
+  const status = r["Status"] || "";
+  const statusClass = status.includes("FLAG") ? "status-flag" :
+                      status === "WATCH" ? "status-watch" : "status-ok";
+  return `<tr>
+    <td>${r["Uploaded On"] || ""}</td>
+    <td>${r["Inspector Last Name"] || ""}</td>
+    <td>${r["Car ID"] || ""}</td>
+    <td>${r["Date"] || ""}</td>
+    <td>${r["AM/PM"] || ""}</td>
+    <td>${r["Shop"] || ""}</td>
+    <td>${r["Start Time"] || ""}</td>
+    <td>${r["Center (°F)"] || ""}</td>
+    <td>${r["Vent A (°F)"] || ""}</td>
+    <td>${r["Vent B (°F)"] || ""}</td>
+    <td>${r["Average (°F)"] || ""}</td>
+    <td class="${statusClass}">${status}</td>
+    <td>${r["Notes"] || ""}</td>
+  </tr>`;
+}).join("");
   }
 
   function updateStats() {
