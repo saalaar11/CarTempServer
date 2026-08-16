@@ -36,26 +36,28 @@ app.post("/upload-csv", express.text({ type: "*/*" }), (req, res) => {
     if (!csv || typeof csv !== "string") {
       return res.status(400).json({ success: false, error: "No CSV body received" });
     }
-    
     const lines = csv.trim().split("\n");
     if (lines.length < 2) {
       return res.status(400).json({ success: false, error: "CSV has no data rows" });
     }
-    
     const headers = lines[0].split(",");
-    const newRecords = lines.slice(1).map(line => {
+    const existingIDs = new Set(records.map(r => r["Record ID"]).filter(Boolean));
+    
+    const newRecords = [];
+    lines.slice(1).forEach(line => {
       const values = line.split(",");
       const record = {};
       headers.forEach((h, i) => {
         record[h.trim()] = values[i]?.trim() || "";
       });
-      record.id = Date.now().toString() + Math.random();
-      return record;
+      if (!existingIDs.has(record["Record ID"])) {
+        newRecords.push(record);
+      }
     });
 
     records.push(...newRecords);
     saveData();
-    res.json({ success: true, added: newRecords.length });
+    res.json({ success: true, added: newRecords.length, skipped: lines.length - 1 - newRecords.length });
   } catch (err) {
     console.error("Upload error:", err);
     res.status(500).json({ success: false, error: err.message });
